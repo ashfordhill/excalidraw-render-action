@@ -5,12 +5,15 @@ branding:
   color: 'purple'
 
 inputs:
+  token:
+    description: 'GitHub Token for the GitHub Action bot to commit'
+    required: true
   input-dir:
-    description: 'Directory containing .excalidraw files'
+    description: 'Parent directory to search for .excalidraw files'
     required: false
     default: '.'
   output-dir:
-    description: 'Directory to output PNG files (defaults to same as input directory)'
+    description: 'Directory to output PNG files. Defaults to same dir as input-dir'
     required: false
     default: ''
 
@@ -22,9 +25,15 @@ runs:
       with:
         node-version: '20'
     
-    - name: Install excalidraw-cli
+    - name: Install excalidraw-brute-export-cli
       shell: bash
-      run: npm install -g @tommywalkie/excalidraw-cli
+      run: npm install -g excalidraw-brute-export-cli
+    
+    - name: Install Playwright dependencies
+      shell: bash
+      run: |
+        npx playwright install-deps firefox
+        npx playwright install firefox
     
     - name: Convert Excalidraw files to PNG
       shell: bash
@@ -45,20 +54,38 @@ runs:
           
           # Use relative path from current directory
           relative_file="${file#./}"
-          filename=$(basename "$relative_file")
-          file_dir=$(dirname "$relative_file")
+          output_basename="${relative_file%.excalidraw}.png"
           
-          # Change to the file's directory and run excalidraw-cli there
-          # This prevents the CLI from duplicating the directory structure
-          if [ "$file_dir" != "." ]; then
-            output_file="$file_dir/${filename%.excalidraw}.png"
-            echo "Converting $relative_file to $output_file"
-            (cd "$file_dir" && excalidraw-cli "$filename" ".")
+          if [ "$OUTPUT_DIR" != "$INPUT_DIR" ]; then
+            # If output dir is different, create subdirectories in output
+            file_dir=$(dirname "$relative_file")
+            if [ "$file_dir" != "." ]; then
+              mkdir -p "$OUTPUT_DIR/$file_dir"
+              output_file="$OUTPUT_DIR/$file_dir/$(basename "$output_basename")"
+            else
+              mkdir -p "$OUTPUT_DIR"
+              output_file="$OUTPUT_DIR/$(basename "$output_basename")"
+            fi
           else
-            output_file="${filename%.excalidraw}.png"
-            echo "Converting $relative_file to $output_file"
-            excalidraw-cli "$filename" "."
+            # Same directory - use the file's directory
+            file_dir=$(dirname "$relative_file")
+            if [ "$file_dir" != "." ]; then
+              mkdir -p "$file_dir"
+              output_file="$file_dir/$(basename "$output_basename")"
+            else
+              output_file="$(basename "$output_basename")"
+            fi
           fi
+          
+          echo "Converting $relative_file to $output_file"
+          excalidraw-brute-export-cli \
+            -i "$relative_file" \
+            -o "$output_file" \
+            --format png \
+            --background 1 \
+            --embed-scene 0 \
+            --dark-mode 0 \
+            --scale 1
         done < <(find "$INPUT_DIR" -name "*.excalidraw" -type f -print0)
         
         if [ $found_files -eq 0 ]; then

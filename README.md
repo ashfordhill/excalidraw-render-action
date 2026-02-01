@@ -37,7 +37,6 @@ jobs:
         uses: ashfordhill/excalidraw-render-action@v1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          input-dir: '.'
       
       - name: Commit rendered images
         run: |
@@ -80,4 +79,4 @@ See this repo's past commits for examples of this in action with `test.excalidra
 
 ## Credits
 
-This action uses [excalidraw-cli](https://github.com/tommywalkie/excalidraw-cli) for rendering Excalidraw files.
+This action uses [excalidraw-brute-export-cli](https://github.com/realazthat/excalidraw-brute-export-cli) for rendering Excalidraw files.
