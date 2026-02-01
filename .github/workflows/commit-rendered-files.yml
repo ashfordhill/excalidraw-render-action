@@ -2,7 +2,7 @@ name: Render and Commit Excalidraw Files
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
     paths:
       - '**.excalidraw'
   workflow_dispatch:
