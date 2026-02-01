@@ -5,12 +5,15 @@ branding:
   color: 'purple'
 
 inputs:
+  token:
+    description: 'GitHub Token for the GitHub Action bot to commit'
+    required: true
   input-dir:
-    description: 'Directory containing .excalidraw files'
+    description: 'Parent directory to search for .excalidraw files'
     required: false
     default: '.'
   output-dir:
-    description: 'Directory to output PNG files (defaults to same as input directory)'
+    description: 'Directory to output PNG files. Defaults to same dir as input-dir'
     required: false
     default: ''
 
