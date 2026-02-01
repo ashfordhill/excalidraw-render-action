@@ -59,7 +59,7 @@ runs:
           
           output_file="$output_path/${filename}.png"
           echo "Converting $file to $output_file"
-          excalidraw-cli "$file" -o "$output_file"
+          excalidraw-cli "$file" "$output_path"
         done < <(find "$INPUT_DIR" -name "*.excalidraw" -type f -print0)
         
         if [ $found_files -eq 0 ]; then
