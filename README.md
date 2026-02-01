@@ -2,6 +2,8 @@
 
 A GitHub Action that automatically converts `.excalidraw` files to PNG images using [excalidraw-cli](https://github.com/tommywalkie/excalidraw-cli).
 
+![](test.png)
+
 ## How It Works
 
 1. The action searches for all `.excalidraw` files in the specified input directory (recursively)
@@ -10,6 +12,8 @@ A GitHub Action that automatically converts `.excalidraw` files to PNG images us
 4. Directory structure is preserved when using subdirectories
 
 ## Usage
+
+### ⚠️ Make sure repo's settings in Actions -> General -> Workflow permissions has "Read and write permissions" enabled ⚠️
 
 Convert all `.excalidraw` files in your repository to PNG images in the same directory:
 
@@ -32,7 +36,6 @@ jobs:
       - name: Render Excalidraw files to PNG
         uses: ashfordhill/excalidraw-render-action@v1
         with:
-          # Make sure repo's settings in Actions -> General -> Workflow permissions has "Read and write permissions" enabled
           token: ${{ secrets.GITHUB_TOKEN }}
           input-dir: '.'
       
