@@ -45,30 +45,20 @@ runs:
           
           # Use relative path from current directory
           relative_file="${file#./}"
-          output_file="${relative_file%.excalidraw}.png"
+          filename=$(basename "$relative_file")
+          file_dir=$(dirname "$relative_file")
           
-          if [ "$OUTPUT_DIR" != "$INPUT_DIR" ]; then
-            # If output dir is different, create subdirectories in output
-            file_dir=$(dirname "$relative_file")
-            if [ "$file_dir" != "." ]; then
-              mkdir -p "$OUTPUT_DIR/$file_dir"
-              output_dir="$OUTPUT_DIR/$file_dir"
-            else
-              mkdir -p "$OUTPUT_DIR"
-              output_dir="$OUTPUT_DIR"
-            fi
+          # Change to the file's directory and run excalidraw-cli there
+          # This prevents the CLI from duplicating the directory structure
+          if [ "$file_dir" != "." ]; then
+            output_file="$file_dir/${filename%.excalidraw}.png"
+            echo "Converting $relative_file to $output_file"
+            (cd "$file_dir" && excalidraw-cli "$filename" ".")
           else
-            # Same directory - use the file's directory
-            file_dir=$(dirname "$relative_file")
-            if [ "$file_dir" != "." ]; then
-              output_dir="$file_dir"
-            else
-              output_dir="."
-            fi
+            output_file="${filename%.excalidraw}.png"
+            echo "Converting $relative_file to $output_file"
+            excalidraw-cli "$filename" "."
           fi
-          
-          echo "Converting $relative_file to ${output_dir}/$(basename "$output_file")"
-          excalidraw-cli "$relative_file" "$output_dir"
         done < <(find "$INPUT_DIR" -name "*.excalidraw" -type f -print0)
         
         if [ $found_files -eq 0 ]; then
