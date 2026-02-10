@@ -33,7 +33,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Render Excalidraw files to PNG
-        uses: ashfordhill/excalidraw-render-action@v1
+        uses: ashfordhill/excalidraw-render-action@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       
