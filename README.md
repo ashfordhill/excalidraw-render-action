@@ -1,4 +1,4 @@
-# Excalidraw Render Action
+# Excalidraw To PNG Action
 
 A GitHub Action that automatically converts `.excalidraw` files to PNG images using [excalidraw-brute-export-cli](https://github.com/realazthat/excalidraw-brute-export-cli)
 ![](test.png).
