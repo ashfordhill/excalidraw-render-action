@@ -1,7 +1,9 @@
 # Excalidraw Render Action
 
 A GitHub Action that automatically converts `.excalidraw` files to PNG images using [excalidraw-brute-export-cli](https://github.com/realazthat/excalidraw-brute-export-cli)
-![](test.png)
+![](test.png).
+
+> **Note:** This uses Playwright to generate .pngs because there are issues with proper image generation when NOT using the browser. If Excalidraw releases CLI tools this can be simplified.
 
 ## How It Works
 
@@ -33,7 +35,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Render Excalidraw files to PNG
-        uses: ashfordhill/excalidraw-render-action@v2
+        uses: ashfordhill/action-excalidraw-to-png@v3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
       

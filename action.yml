@@ -1,5 +1,5 @@
-name: 'Excalidraw Render Action'
-description: 'Convert Excalidraw files to PNG images'
+name: 'Excalidraw To PNG'
+description: 'Generate PNG images from all .excalidraw files in repository'
 branding:
   icon: 'image'
   color: 'purple'
