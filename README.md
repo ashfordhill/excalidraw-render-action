@@ -1,4 +1,4 @@
-# Excalidraw Render Action
+# Excalidraw To PNG Action
 
 ## Deprecated, use the Docker-based, offline & svg-generating version of this action [here](https://github.com/ashfordhill/excalidraw-render-action)
 
