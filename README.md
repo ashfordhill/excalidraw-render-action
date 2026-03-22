@@ -1,5 +1,7 @@
 # Excalidraw Render Action
 
+## Deprecated, use the Docker-based, offline & svg-generating version of this action [here](https://github.com/ashfordhill/excalidraw-render-action)
+
 A GitHub Action that automatically converts `.excalidraw` files to PNG images using [excalidraw-brute-export-cli](https://github.com/realazthat/excalidraw-brute-export-cli)
 ![](test.png).
 
@@ -81,3 +83,4 @@ See this repo's past commits for examples of this in action with `test.excalidra
 ## Credits
 
 This action uses [excalidraw-brute-export-cli](https://github.com/realazthat/excalidraw-brute-export-cli) for rendering Excalidraw files.
+
